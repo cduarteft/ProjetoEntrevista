@@ -1,0 +1,5 @@
+package com.interview.repository;
+
+public interface ClienteEmprestimoRepository {
+
+}

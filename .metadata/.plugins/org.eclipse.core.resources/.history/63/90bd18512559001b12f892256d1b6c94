@@ -1,0 +1,19 @@
+package com.interview.applicationService;
+
+
+import com.interview.to.ClienteTO;
+
+public class emprestimoRegraDisponibilidade {
+
+	
+	ClienteTO clienteEmprestimo = new ClienteTO();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

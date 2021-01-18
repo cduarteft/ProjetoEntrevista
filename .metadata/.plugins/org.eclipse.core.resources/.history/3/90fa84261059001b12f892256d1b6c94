@@ -1,0 +1,11 @@
+package com.interview.model;
+
+public class Cliente {
+
+	private Long id;
+	private String nome;
+	
+	
+	
+	
+}

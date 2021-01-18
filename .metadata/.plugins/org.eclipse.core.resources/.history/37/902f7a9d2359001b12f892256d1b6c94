@@ -1,0 +1,36 @@
+package com.interview.model;
+
+import javax.persistence.Entity;
+
+@Entity
+public class ModalidadeEmprestimos {
+
+	
+	private String tipo;
+	private String taxa;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	public String getTaxa() {
+		return taxa;
+	}
+	public void setTaxa(String taxa) {
+		this.taxa = taxa;
+	}
+	
+	
+	
+}

@@ -1,0 +1,17 @@
+package com.interview.applicationService;
+
+import com.interview.model.Cliente;
+import com.interview.model.ModalidadeEmprestimos;
+
+public class emprestimoRegraDisponibilidade {
+
+	
+	Cliente cliente = new Cliente();
+	ModalidadeEmprestimos modalidade = new ModalidadeEmprestimos();
+	
+	
+	
+	
+	
+	
+}

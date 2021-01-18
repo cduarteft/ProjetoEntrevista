@@ -1,0 +1,114 @@
+package com.interview.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import com.interview.model.Cliente;
+import com.interview.model.ModalidadeEmprestimos;
+import com.interview.repository.ClienteEmprestimoRepository;
+
+
+
+@RestController
+@RequestMapping("/clientes")
+public class ClienteController {
+
+	@Autowired
+	private ClienteEmprestimoRepository clienteRepository;
+
+	@GetMapping
+	public List<Cliente> listarClientes() {
+		return clienteRepository.findAll();
+	}
+
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public Cliente adicionarCliente(@RequestBody Cliente cliente) {
+		
+		cliente = (Cliente) emprestimoDisponibilidadeRegra(cliente);	
+		
+		return clienteRepository.save(cliente);
+	}
+
+	
+	
+	
+	
+	
+	
+	public List<Cliente> emprestimoDisponibilidadeRegra(Cliente cliente) {
+	
+		List<Cliente> clientes = new ArrayList<>();
+
+		ModalidadeEmprestimos modalidade = new ModalidadeEmprestimos();
+		List<ModalidadeEmprestimos> mod = new ArrayList<>();
+		
+		clientes.add(cliente);
+
+		for (Cliente cli : clientes) {
+
+			//Primeira regra Concessão***
+			if (cli.getSalario() <= 3000) {
+				modalidade.setTipo("Pessoal");
+				modalidade.setTaxa("4");
+				mod.add(modalidade);
+
+				if (cli.getUf().equals("CE") && cli.getIdade() < 30) {
+					ModalidadeEmprestimos modalidadeG = new ModalidadeEmprestimos();
+					modalidadeG.setTipo("Garantia");
+					modalidadeG.setTaxa("3");
+					mod.add(modalidadeG);
+
+				}
+			}
+
+			
+			//Segunda Regra concessão**
+			if (cli.getSalario() > 3000 && cli.getSalario() < 5000) {
+				modalidade.setTipo("Pessoal");
+				modalidade.setTaxa("4");
+				mod.add(modalidade);
+
+				if (cli.getUf().equals("CE")) {
+					ModalidadeEmprestimos modalidadeG2 = new ModalidadeEmprestimos();
+					modalidadeG2.setTipo("Garantia");
+					modalidadeG2.setTaxa("3");
+					mod.add(modalidadeG2);
+				}
+			}
+			
+			//Terceira Regra de Concessão *
+			if(cli.getSalario() >= 5000) {
+				modalidade.setTipo("Pessoal");
+				modalidade.setTaxa("4");
+				mod.add(modalidade);
+				
+				if(cli.getIdade() < 30) {
+					ModalidadeEmprestimos modalidadeG3 = new ModalidadeEmprestimos(); 
+					modalidadeG3.setTipo("Garantia");
+					modalidadeG3.setTaxa("3");
+					mod.add(modalidadeG3);
+					
+					ModalidadeEmprestimos modalidadeC = new ModalidadeEmprestimos(); 
+					modalidadeC.setTipo("Consignado");
+					modalidadeC.setTaxa("2");
+					mod.add(modalidadeC);
+				}			
+			}
+			
+		clientes.add(cli);	
+		}
+		
+		return clientes;
+
+	}
+
+}
